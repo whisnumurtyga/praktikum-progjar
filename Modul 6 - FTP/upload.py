@@ -1,27 +1,35 @@
-import ftplib 
+import ftplib
+import os
 
+def upload_file(hostname, username, password, filename):
+    try:
+        # Membuat objek FTP
+        ftp = ftplib.FTP(hostname)
 
-def upload_file(hostname, username, password, filename):     
-    try: 
-        #membuat objek FTP 
-        ftp = ftplib.FTP(hostname)  
-        #login ke server FTP 
-        ftp.login(username, password) 
- 
-        #buka file untuk dibaca         
-        with open(filename, 'rb') as file: 
-            #unggah file mp4             
-            ftp.storbinary('STOR ' + filename, file)  
-            #tutup koneksi ftp         
-            ftp.quit() 
-            print("File berhasil diunggah")     
-    except ftplib.all_errors as e: 
-        print("Terjadi kesalahan: ", e) 
- 
-#contoh penggunaan fungsi upload_file 
-hostname = '127.0.0.1' 
-username = 'whisnuu' 
-password = 'progjar123' 
-filename = 'mantoi.jpg' 
+        # Login ke server FTP
+        ftp.login(username, password)
 
-upload_file(hostname, username, password, filename) 
+        # Buka file untuk dibaca
+        with open(filename, 'rb') as file:
+            # Dapatkan nama file tanpa ekstensi
+            base_filename = os.path.splitext(filename)[0]
+
+            # Tambahkan awalan "new_" pada nama file
+            new_filename = "new_" + base_filename + os.path.splitext(filename)[1]
+
+            # Unggah file mp4 dengan nama baru
+            ftp.storbinary('STOR ' + new_filename, file)
+
+        # Tutup koneksi FTP
+        ftp.quit()
+        print("Gambar berhasil diunggah")
+    except ftplib.all_errors as e:
+        print("Terjadi kesalahan: ", e)
+
+# Contoh penggunaan fungsi upload_file
+hostname = '127.0.0.1'
+username = 'whisnuu'
+password = 'progjar123'
+
+filename = '23.jpg'
+upload_file(hostname, username, password, filename)

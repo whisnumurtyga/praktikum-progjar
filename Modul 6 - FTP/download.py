@@ -36,5 +36,5 @@ hostname = '127.0.0.1'
 username = 'whisnuu'
 password = 'progjar123'
 
-filename = 'saran.png'
+filename = 'whisnu.png'
 download_file(hostname, username, password, filename)
